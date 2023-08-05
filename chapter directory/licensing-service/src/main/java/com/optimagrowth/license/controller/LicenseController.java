@@ -2,12 +2,12 @@ package com.optimagrowth.license.controller;
 
 import com.optimagrowth.license.model.License;
 import com.optimagrowth.license.service.LicenseService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Locale;
 
 /**
  * 스프링 부트에 이 서비스는 REST 기반 서비스이며
@@ -20,7 +20,7 @@ public class LicenseController {
     @Autowired
     private LicenseService licenseService;
 
-    @GetMapping(value="/{licenseId}")
+    @RequestMapping(value="/{licenseId}", method = RequestMethod.GET)
     public ResponseEntity<License> getLicense(
             @PathVariable("organizationId") String organizationId,
             @PathVariable("licenseId") String licenseId
@@ -29,4 +29,27 @@ public class LicenseController {
         // License 객체와 200(OK) 상태 코드를 반환
         return ResponseEntity.ok(license);
     }
+
+    @PutMapping
+    public ResponseEntity<String> updateLicense(
+            @PathVariable("organizationId") String organizationId,
+            @RequestBody License request
+    ) {
+        return ResponseEntity.ok(licenseService.updateLicense(request,organizationId));
+    }
+
+    @PostMapping
+    public ResponseEntity<String> createicense(
+            @PathVariable("organizationId") String organizationId,
+            @RequestBody License request,
+            @RequestHeader(value = "Accept-Language",required = false) Locale locale
+    ) {
+        return ResponseEntity.ok(licenseService.createLicense(request,organizationId, locale));
+    }
+
+    @DeleteMapping(value="/{licenseId}")
+    public ResponseEntity<String> deleteLicense(@PathVariable("organizationId") String organizationId, @PathVariable("licenseId") String licenseId) {
+        return ResponseEntity.ok(licenseService.deleteLicense(licenseId, organizationId));
+    }
+
 }
