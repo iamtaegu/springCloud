@@ -31,7 +31,9 @@ public class LicenseService {
         String responseMessage = null;
         if(!StringUtils.isEmpty(license)) {
             license.setOrganizationId(organizationId);
-            responseMessage = String.format(messages.getMessage("license.create.message",null,locale), license.toString());
+            responseMessage = String.format(messages.getMessage("license.create.message"
+                            ,null,locale)
+                            , license.toString());
         }
 
         return responseMessage;
@@ -41,7 +43,10 @@ public class LicenseService {
         String responseMessage = null;
         if(!StringUtils.isEmpty(license)) {
             license.setOrganizationId(organizationId);
-            responseMessage = String.format(messages.getMessage("license.update.message", null, null), license.toString());
+            responseMessage = String.format(messages.getMessage("license.update.message"
+                    , null
+                    , null) // messages.properties 디폴트 메시지 파일
+                    , license.toString());
         }
 
         return responseMessage;

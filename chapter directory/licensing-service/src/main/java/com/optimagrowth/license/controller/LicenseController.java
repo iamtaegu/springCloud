@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Locale;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+
 /**
  * 스프링 부트에 이 서비스는 REST 기반 서비스이며
  * 응답은 JSON으로 서비스 요청 및 응답을 자동으로 직렬화 및 역직렬화할 것이라고 지정
@@ -20,12 +23,28 @@ public class LicenseController {
     @Autowired
     private LicenseService licenseService;
 
+    /**
+     * HATEOAS 링크 추가
+     */
     @RequestMapping(value="/{licenseId}", method = RequestMethod.GET)
     public ResponseEntity<License> getLicense(
             @PathVariable("organizationId") String organizationId,
             @PathVariable("licenseId") String licenseId
     ) {
         License license = licenseService.getLicense(organizationId, licenseId);
+
+        /**
+         * add()는 RepresentationModel 클래스 메서드
+         * linkTo() 메서드는 LicenseController 클래스를 검사해서 루트 매핑을 얻고,
+         *  methodOn() 메서드는 대상 메서드에 더미 호출을 수행하여 메서드 매핑을 가져옴
+         */
+        license.add(
+                    linkTo(methodOn(LicenseController.class).getLicense(organizationId, license.getLicenseId())).withSelfRel(),
+                    linkTo(methodOn(LicenseController.class).createLicense(organizationId, license, null)).withRel("createLicense"),
+                    linkTo(methodOn(LicenseController.class).updateLicense(organizationId, license)).withRel("updateLicense"),
+                    linkTo(methodOn(LicenseController.class).deleteLicense(organizationId, license.getLicenseId())).withRel("deleteLicense")
+        );
+
         // License 객체와 200(OK) 상태 코드를 반환
         return ResponseEntity.ok(license);
     }
@@ -39,7 +58,7 @@ public class LicenseController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createicense(
+    public ResponseEntity<String> createLicense(
             @PathVariable("organizationId") String organizationId,
             @RequestBody License request,
             @RequestHeader(value = "Accept-Language",required = false) Locale locale
