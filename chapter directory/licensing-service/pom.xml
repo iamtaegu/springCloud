@@ -2,20 +2,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.7.14</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>com.optimagrowth</groupId>
 	<artifactId>licensing-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>licensing-service</name>
 	<description>Ostock Licensing Service</description>
+
 	<properties>
 		<java.version>11</java.version>
+		<docker.image.prefix>ostock</docker.image.prefix>
 	</properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -55,6 +60,32 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<!--
+				* 도커 메이븐 플러그인을 추가해서 도커 이미지를 빌드
+				* 아래 플러그인을 사용하면 메이블 pom.xml 파일에서 도커 이미지와 컨테이너를 관리할 수 있음
+			-->
+			<plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>dockerfile-maven-plugin</artifactId>
+				<version>1.4.13</version>
+				<configuration>
+					<repository>${docker.image.prefix}/${project.artifactId}</repository>
+					<tag>${project.version}</tag>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+					</buildArgs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>default</id>
+						<phase>install</phase>
+						<goals>
+							<goal>build</goal>
+							<goal>push</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
