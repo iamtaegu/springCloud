@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/chapter1/simple-application/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/chapter2/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/chapter5/_configserver/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/chapter5/configserver/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licensing-service/licensing-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licensing-service/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/licensing-service/src/main/resources" charset="UTF-8" />
