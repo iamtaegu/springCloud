@@ -2,6 +2,7 @@ package com.optimagrowth.license;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.LocaleResolver;
@@ -11,8 +12,12 @@ import java.util.Locale;
 
 /**
  * 부트스트랩 클래스 - 스프링 부트가 애플리케이션을 시작하고 초기화함
+ * @RefreshScopr
+ * 	- 스프링 애플리케이션이 구성 정보를 다시 읽게 만드는 /refresh 엔드포인트에 접근할 수 있게 함
+ * 	- 단, 사용자가 정의한 스프링 프로퍼티만 다시 로드함
  */
 @SpringBootApplication
+@RefreshScope
 public class LicensingServiceApplication {
 
 	public static void main(String[] args) {
