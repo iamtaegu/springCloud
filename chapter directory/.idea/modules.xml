@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/chapter5/_configserver/configserver (1).iml" filepath="$PROJECT_DIR$/chapter5/_configserver/configserver (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/chapter2/licensing-service.iml" filepath="$PROJECT_DIR$/chapter2/licensing-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/licensing-service/licensing-service (1).iml" filepath="$PROJECT_DIR$/licensing-service/licensing-service (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/chapter5/licensing-service/licensing-service (2).iml" filepath="$PROJECT_DIR$/chapter5/licensing-service/licensing-service (2).iml" />
       <module fileurl="file://$PROJECT_DIR$/chapter1/simple-application/simple-application.iml" filepath="$PROJECT_DIR$/chapter1/simple-application/simple-application.iml" />
     </modules>
   </component>

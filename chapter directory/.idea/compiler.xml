@@ -12,6 +12,7 @@
         <module name="configserver (1)" />
         <module name="configserver" />
         <module name="licensing-service (1)" />
+        <module name="licensing-service (2)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,6 +20,7 @@
       <module name="configserver (1)" target="11" />
       <module name="licensing-service" target="11" />
       <module name="licensing-service (1)" target="11" />
+      <module name="licensing-service (2)" target="11" />
       <module name="simple-application" target="11" />
     </bytecodeTargetLevel>
   </component>
@@ -28,6 +30,7 @@
       <module name="configserver (1)" options="-parameters" />
       <module name="licensing-service" options="-parameters" />
       <module name="licensing-service (1)" options="-parameters" />
+      <module name="licensing-service (2)" options="-parameters" />
       <module name="simple-application" options="-parameters" />
     </option>
   </component>

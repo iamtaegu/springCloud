@@ -1,0 +1,8 @@
+spring:
+    application:
+     name: licensing-service 
+    profiles:
+      active: dev
+    cloud:
+        config: 
+            uri: http://54.84.19.74:8071
