@@ -1,6 +1,11 @@
+spring:
+  application:
+    name: eureka-server
+  boot:
+    admin:
+      context-path: /admin
 server:
   port: 8070
-
 eureka:
   instance:
     hostname: eurekaserver
@@ -8,19 +13,18 @@ eureka:
     registerWithEureka: false # 컨피그 서버가 유레카 서비스에 등록하지 않도록 지시
     fetchRegistry: false # 컨피그 서버가 캐시 레지스트리 정보를 로컬에 캐시하지 않도록 지시
     serviceUrl:
-      defaultZone:
-        http://${eureka.instance.hostname}:${server.port}/eureka/
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
   server:
-    # 서버가 요청을 받기 전 초기 대기 시간을 설정(시작하기 전 대기할 시간을 밀리초로 표시)
-    # 서비스를 로컬에서 테스트할 때 유레카가 등록된 서비스를 바로 알리지 않기 때문에 이 프로퍼티를 사용 
-    # 기본적으로 모든 서비스에 등록할 기회를 주고자 유레카가 알리기 전에 5분을 기다림
-    #  > 로컬에서 이 프로퍼티를 사용하면 유레카 서비스를 시작하고 등록된 서비스를 표시하는 데 걸리는 시간을 단축할 수 있음
-    # 유레카에 등록된 서비스가 표시되는 데 최대 30초가 소요
-    #  > 유레카는 서비스를 사용할 준비가 되었다고 알리기 전에 10초 간격으로 연속 3회 ping을 보내서 상태 정보를 확인
-    waitTimeInMsWhenSyncEmpty: 5
-
+    waitTimeInMsWhenSyncEmpty: 5  # 서버가 요청을 받기 전 초기 대기 시간을 설정(시작하기 전 대기할 시간을 밀리초로 표시)
+      # 서비스를 로컬에서 테스트할 때 유레카가 등록된 서비스를 바로 알리지 않기 때문에 이 프로퍼티를 사용
+      # 기본적으로 모든 서비스에 등록할 기회를 주고자 유레카가 알리기 전에 5분을 기다림
+      #  > 로컬에서 이 프로퍼티를 사용하면 유레카 서비스를 시작하고 등록된 서비스를 표시하는 데 걸리는 시간을 단축할 수 있음
+      # 유레카에 등록된 서비스가 표시되는 데 최대 30초가 소요
+      #  > 유레카는 서비스를 사용할 준비가 되었다고 알리기 전에 10초 간격으로 연속 3회 ping을 보내서 상태 정보를 확인
+      
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+   
