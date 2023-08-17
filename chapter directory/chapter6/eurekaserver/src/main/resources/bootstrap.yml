@@ -3,7 +3,7 @@ spring:
      name: eureka-server 
     cloud:
         config: 
-            uri: http://172.31.86.214:8071 # private ip 
+            uri: http://172.31.86.214:8071 # private ip
         loadbalancer:
             ribbon:
                enabled: false

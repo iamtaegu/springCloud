@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaserver" />
         <module name="organization-service" />
+        <module name="licensing-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
