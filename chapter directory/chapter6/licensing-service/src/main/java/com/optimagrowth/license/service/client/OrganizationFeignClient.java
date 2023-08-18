@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.optimagrowth.license.model.Organization;
 
-@FeignClient("organization-service")
+@FeignClient("organization-service") // Feign에 서비스를 알려줌
 public interface OrganizationFeignClient {
-    @RequestMapping(
+    @RequestMapping( // 엔드포인트 경로와 액션을 정의
             method= RequestMethod.GET,
             value="/v1/organization/{organizationId}",
             consumes="application/json")
-    Organization getOrganization(@PathVariable("organizationId") String organizationId);
+    Organization getOrganization(@PathVariable("organizationId") String organizationId); // 엔드포인트에 전달되는 매개변수를 정의
 }

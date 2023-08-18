@@ -14,6 +14,7 @@ public class OrganizationRestTemplateClient {
     RestTemplate restTemplate;
 
     public Organization getOrganization(String organizationId){
+        // 로드 밸런서 지원 RestTemplate을 사용할 때 유레카 서비스 ID로 대상 URL를 생성
         ResponseEntity<Organization> restExchange =
                 restTemplate.exchange(
                         "http://organization-service/v1/organization/{organizationId}",

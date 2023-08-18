@@ -16,8 +16,8 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @SpringBootApplication
 @RefreshScope
-@EnableDiscoveryClient
-@EnableFeignClients
+@EnableDiscoveryClient // Discovery Client 사용하려고 추가
+@EnableFeignClients // Feign 클라이언트를 사용하려고 추가
 public class LicenseServiceApplication {
 
 	public static void main(String[] args) {
