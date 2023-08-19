@@ -5,4 +5,4 @@ spring:
       active: dev
     cloud:
         config:
-            uri: http://54.84.19.74:8071
+            uri: http://172.31.86.214:8071
