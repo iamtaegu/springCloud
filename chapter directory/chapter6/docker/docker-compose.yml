@@ -35,8 +35,8 @@ services:
     ports:
       - "8070:8070"
     depends_on:
-      database:
-        condition: service_healthy
+      #database:
+      #  condition: service_healthy
       configserver:
         condition: service_started  
     networks:
@@ -49,11 +49,11 @@ services:
       PROFILE: "dev"
       CONFIGSERVER_URI: "http://configserver:8071"
       CONFIGSERVER_PORT:   "8071"
-      DATABASESERVER_PORT: "5432"
+#      DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY:       "IMSYMMETRIC"
     depends_on:
-      database:
-        condition: service_healthy
+      #database:
+      #  condition: service_healthy
       configserver:
         condition: service_started
     ports:
@@ -66,11 +66,11 @@ services:
       PROFILE: "dev"
       CONFIGSERVER_URI: "http://configserver:8071"
       CONFIGSERVER_PORT:   "8071"
-      DATABASESERVER_PORT: "5432"
+#      DATABASESERVER_PORT: "5432"
       ENCRYPT_KEY:       "IMSYMMETRIC"
     depends_on:
-      database:
-        condition: service_healthy
+      #database:
+      #  condition: service_healthy
       configserver:
         condition: service_started
     ports:
