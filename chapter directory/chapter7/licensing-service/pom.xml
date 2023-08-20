@@ -85,12 +85,16 @@
 		    <groupId>org.springframework.cloud</groupId>
 		    <artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
+
+		<!-- Resilience4j library
+		 * resilience4j-spring-boot2: 커스텀 패턴의 애너테이션 사용 지원
+		 * resilience4j-circuitbreaker/timelimiter: 산출물에는 회로 차단기 및 속도 제한기를 구현한 로직 포함
+		-->
 		<dependency>
 		    <groupId>io.github.resilience4j</groupId>
 		    <artifactId>resilience4j-spring-boot2</artifactId>
 		    <version>${resilience4j.version}</version>
 		</dependency>
-		
 		<dependency>
 		    <groupId>io.github.resilience4j</groupId>
 		    <artifactId>resilience4j-circuitbreaker</artifactId>
@@ -101,6 +105,11 @@
 		    <artifactId>resilience4j-timelimiter</artifactId>
 		    <version>${resilience4j.version}</version>
 		</dependency>
+
+		<!-- AOP는
+		 * 시스템의 다른 부분에 영향을 주는 프로그램 부분을 분리하여 모듈성을 높이려는 프로래밍 패러다임
+		 * AOP는 코드를 수정하지 않고 새로운 동작을 기존 코드에 추가
+		-->
 		 <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
