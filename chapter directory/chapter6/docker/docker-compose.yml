@@ -1,29 +1,29 @@
 version: '2.1'
 services:
-#  database:
-#    image: postgres:latest
-#    ports:
-#      - "5432:5432"
-#    environment:
-#      POSTGRES_USER: "postgres"
-#      POSTGRES_PASSWORD: "postgres"
-#      POSTGRES_DB:       "ostock_dev"
-#    volumes:
-#        - ./init.sql:/docker-entrypoint-initdb.d/1-init.sql
-#        - ./data.sql:/docker-entrypoint-initdb.d/2-data.sql
-#    networks:
-#      backend:
-#        aliases:
-#          - "database"
-#    healthcheck:
-#      test: ["CMD-SHELL", "pg_isready -U postgres"]
-#      interval: 10s
-#      timeout: 5s
-#      retries: 5
+  database:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB:       "ostock_dev"
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./data.sql:/docker-entrypoint-initdb.d/2-data.sql
+    networks:
+      backend:
+        aliases:
+          - "database"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
   configserver:
     image: ostock/configserver:0.0.1-SNAPSHOT
     ports:
-       - "8071:8071"
+      - "8071:8071"
     environment:
       ENCRYPT_KEY: "fje83Ki8403Iod87dne7Yjsl3THueh48jfuO9j4U2hf64Lo"
     networks:
@@ -35,29 +35,25 @@ services:
     ports:
       - "8070:8070"
     depends_on:
-      #database:
-      #  condition: service_healthy
+      database:
+        condition: service_healthy
       configserver:
-        condition: service_started  
+        condition: service_started
     networks:
       backend:
         aliases:
           - "eurekaserver"
-    environment:
-      CONFIGSERVER_URI: "http://172.31.86.214:8071"
-      CONFIGSERVER_PORT: "8071"R
-      ENCRYPT_KEY: "fje83Ki8403Iod87dne7Yjsl3THueh48jfuO9j4U2hf64Lo"
   licensingservice:
     image: ostock/licensing-service:0.0.3-SNAPSHOT
     environment:
       PROFILE: "dev"
-      CONFIGSERVER_URI: "http://172.31.86.214:8071"
+      CONFIGSERVER_URI: "http://configserver:8071"
       CONFIGSERVER_PORT:   "8071"
-#      DATABASESERVER_PORT: "5432"
-      ENCRYPT_KEY:       "fje83Ki8403Iod87dne7Yjsl3THueh48jfuO9j4U2hf64Lo"
+      DATABASESERVER_PORT: "5432"
+      ENCRYPT_KEY:       "IMSYMMETRIC"
     depends_on:
-      #database:
-      #  condition: service_healthy
+      database:
+        condition: service_healthy
       configserver:
         condition: service_started
     ports:
@@ -68,13 +64,13 @@ services:
     image: ostock/organization-service:0.0.1-SNAPSHOT
     environment:
       PROFILE: "dev"
-      CONFIGSERVER_URI: "http://172.31.86.214:8071"
+      CONFIGSERVER_URI: "http://configserver:8071"
       CONFIGSERVER_PORT:   "8071"
-#      DATABASESERVER_PORT: "5432"
-      ENCRYPT_KEY:       "fje83Ki8403Iod87dne7Yjsl3THueh48jfuO9j4U2hf64Lo"
+      DATABASESERVER_PORT: "5432"
+      ENCRYPT_KEY:       "IMSYMMETRIC"
     depends_on:
-      #database:
-      #  condition: service_healthy
+      database:
+        condition: service_healthy
       configserver:
         condition: service_started
     ports:
