@@ -114,6 +114,9 @@ public class LicenseService {
 
 	}
 
+	/**
+	 * @CircuitBreaker 애너테이션이 사용되면 해당 메서드가 호출될 때마다 Resilience4j 회로 차단기로 래핑 됨
+	 */
 	// @CircuitBreaker(name = "licenseService")	//코드 7-2의 경우 이 애너테이션만 추가한다.
 	@CircuitBreaker(name = "licenseService", fallbackMethod = "buildFallbackLicenseList")
 	@RateLimiter(name = "licenseService", fallbackMethod = "buildFallbackLicenseList")
@@ -137,11 +140,18 @@ public class LicenseService {
 		return fallbackList;
 	}
 
+	/**
+	 * DB 호출이 오래 실행될 가능성은 3분의 1임 
+	 */
 	private void randomlyRunLong() throws TimeoutException{
 		Random rand = new Random();
 		int randomNum = rand.nextInt((3 - 1) + 1) + 1;
 		if (randomNum==3) sleep();
 	}
+
+	/**
+	 * 5000ms(5초) 슬립 후 TimeoutException 예외 발생
+	 */
 	private void sleep() throws TimeoutException{
 		try {
 			System.out.println("Sleep");

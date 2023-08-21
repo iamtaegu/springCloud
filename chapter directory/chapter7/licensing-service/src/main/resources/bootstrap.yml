@@ -39,7 +39,7 @@ management.endpoint.health:
  enabled: true
  show-details: always
 
-
+# 회로 차단기 사용자 정의
 resilience4j.circuitbreaker:
   instances:
     licenseService:
