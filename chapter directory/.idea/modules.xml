@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/chapter6/eurekaserver/eurekaserver.iml" filepath="$PROJECT_DIR$/chapter6/eurekaserver/eurekaserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/chapter6/licensing-service/licensing-service.iml" filepath="$PROJECT_DIR$/chapter6/licensing-service/licensing-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/chapter6/organization-service/organization-service.iml" filepath="$PROJECT_DIR$/chapter6/organization-service/organization-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-security/taco-cloud/taco-cloud.iml" filepath="$PROJECT_DIR$/spring-security/taco-cloud/taco-cloud.iml" />
     </modules>
   </component>
 </project>

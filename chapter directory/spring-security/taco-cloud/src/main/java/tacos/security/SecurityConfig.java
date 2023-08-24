@@ -18,10 +18,28 @@ import org.springframework.context.annotation.Bean;
 
 //import javax.sql.DataSource; JDBC 기반 사용자 스토어에 필요함
 
+/**
+ * SecurityConfig
+ *  ㅇ HTTP 요청 경로에 대해 접근 제한과 같은 보안 관련 처리를 우리가 원하는 대로 할 수 있게 해줌
+ *  ㅇ 보안 구성 클래스(WebSecurityConfigurerAdapter)의 서브 클래스
+ *   - configure(HttpSecurity)를 오버라이딩하고 있음, HTTP 보안을 구성하는 메서드
+ *
+ */
+
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+	/**
+	 * 웹 요청 보안 처리하기
+	 *  ㅁ HttpSecurity 구성을 통한 구현 기능
+	 *   ㅇ HTTP 요청 처리를 허용하기 전에 충족되어야 할 특정 보안 조건을 구성
+	 *    - 사용자 권한 체크가 가장 많이 사용되는 기능
+	 *   ㅇ 커스텀 로그인 페이지를 구성
+	 *   ㅇ 사용자가 애플리케이션의 로그아웃 기능 제공
+	 *   ㅇ CSRF 공격으로부터 보호
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http

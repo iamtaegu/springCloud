@@ -10,6 +10,7 @@
         <module name="eurekaserver" />
         <module name="organization-service" />
         <module name="licensing-service" />
+        <module name="taco-cloud" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,6 +22,7 @@
       <module name="licensing-service (2)" target="11" />
       <module name="organization-service" target="11" />
       <module name="simple-application" target="11" />
+      <module name="taco-cloud" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -33,6 +35,7 @@
       <module name="licensing-service (2)" options="-parameters" />
       <module name="organization-service" options="-parameters" />
       <module name="simple-application" options="-parameters" />
+      <module name="taco-cloud" options="-parameters" />
     </option>
   </component>
 </project>
