@@ -11,6 +11,8 @@
         <module name="organization-service" />
         <module name="licensing-service" />
         <module name="taco-cloud" />
+        <module name="licensing-service (1)" />
+        <module name="organization-service (1)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,6 +23,7 @@
       <module name="licensing-service (1)" target="11" />
       <module name="licensing-service (2)" target="11" />
       <module name="organization-service" target="11" />
+      <module name="organization-service (1)" target="11" />
       <module name="simple-application" target="11" />
       <module name="taco-cloud" target="1.8" />
     </bytecodeTargetLevel>
@@ -34,6 +37,7 @@
       <module name="licensing-service (1)" options="-parameters" />
       <module name="licensing-service (2)" options="-parameters" />
       <module name="organization-service" options="-parameters" />
+      <module name="organization-service (1)" options="-parameters" />
       <module name="simple-application" options="-parameters" />
       <module name="taco-cloud" options="-parameters" />
     </option>
