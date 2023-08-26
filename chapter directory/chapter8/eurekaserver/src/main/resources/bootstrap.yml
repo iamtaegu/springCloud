@@ -2,5 +2,5 @@ spring:
     application:
      name: eureka-server 
     cloud:
-        config: 
+        config:
             uri: http://172.31.86.214:8071
