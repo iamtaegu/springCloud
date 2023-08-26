@@ -11,6 +11,7 @@
         <module name="organization-service" />
         <module name="licensing-service" />
         <module name="taco-cloud" />
+        <module name="licensing-service (1)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -31,7 +32,7 @@
       <module name="configserver (1)" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
       <module name="licensing-service" options="-parameters" />
-      <module name="licensing-service (1)" options="-parameters" />
+      <module name="licensing-service (1)" options="" />
       <module name="licensing-service (2)" options="-parameters" />
       <module name="organization-service" options="-parameters" />
       <module name="simple-application" options="-parameters" />
