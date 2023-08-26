@@ -40,3 +40,4 @@ management:
       exposure:
         include: "*"
         
+        
