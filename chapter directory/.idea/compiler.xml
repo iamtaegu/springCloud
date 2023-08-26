@@ -8,10 +8,11 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaserver" />
+        <module name="gatewayserver" />
+        <module name="licensing-service (1)" />
         <module name="organization-service" />
         <module name="licensing-service" />
         <module name="taco-cloud" />
-        <module name="licensing-service (1)" />
         <module name="organization-service (1)" />
       </profile>
     </annotationProcessing>
@@ -19,6 +20,7 @@
       <module name="configserver" target="11" />
       <module name="configserver (1)" target="11" />
       <module name="eurekaserver" target="11" />
+      <module name="gatewayserver" target="11" />
       <module name="licensing-service" target="11" />
       <module name="licensing-service (1)" target="11" />
       <module name="licensing-service (2)" target="11" />
@@ -33,6 +35,7 @@
       <module name="configserver" options="-parameters" />
       <module name="configserver (1)" options="-parameters" />
       <module name="eurekaserver" options="-parameters" />
+      <module name="gatewayserver" options="-parameters" />
       <module name="licensing-service" options="-parameters" />
       <module name="licensing-service (1)" options="-parameters" />
       <module name="licensing-service (2)" options="-parameters" />

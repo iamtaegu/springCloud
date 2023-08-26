@@ -15,13 +15,13 @@ spring:
   cloud:
     loadbalancer.ribbon.enabled: false
     gateway:
-      discovery.locator:
-        enabled: true
-        lowerCaseServiceId: true
+#      discovery.locator:
+#        enabled: true # 수동매핑만 지원하려면 자동매핑 설정을 끄면 됨
+#        lowerCaseServiceId: true
       routes:
-      - id: organization-service
-        uri: lb://organization-service
-        predicates:
+      - id: organization-service # 선택적(optional) ID는 임의의 경로에 대한 ID
+        uri: lb://organization-service # 이 경로의 대상 URI를 설정
+        predicates: # 경로(path)는 load() 메서드로 설정되지만, 여러 옵션 중 하나
         - Path=/organization/**
         filters:
         - RewritePath=/organization/(?<path>.*), /$\{path}
