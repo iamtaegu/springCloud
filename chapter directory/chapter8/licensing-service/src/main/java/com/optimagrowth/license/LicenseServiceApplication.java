@@ -45,12 +45,12 @@ public class LicenseServiceApplication {
 	}
 
 	@SuppressWarnings("unchecked")
-	@LoadBalanced
+	@LoadBalanced // 로드 밸런서 사용 
 	@Bean
 	public RestTemplate getRestTemplate(){
 		RestTemplate template = new RestTemplate();
         List interceptors = template.getInterceptors();
-        if (interceptors==null){
+        if (interceptors==null){ // RestTemplate 인스턴스에 UserContextInterceptor 추가
             template.setInterceptors(Collections.singletonList(new UserContextInterceptor()));
         }
         else{

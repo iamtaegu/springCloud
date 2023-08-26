@@ -2,6 +2,12 @@ package com.optimagrowth.license.utils;
 
 import org.springframework.stereotype.Component;
 
+/**
+ * POJO 
+ * 마이크로서비스가 처리하는 각 서비스 클라이언트 요청의 HTTP 헤더 값 보관
+ * java.lang.ThreadLocal에서 값을 조회하고 저장하는 getter/setter 메서드로 구성
+ */
+
 @Component
 public class UserContext {
     public static final String CORRELATION_ID = "tmx-correlation-id";

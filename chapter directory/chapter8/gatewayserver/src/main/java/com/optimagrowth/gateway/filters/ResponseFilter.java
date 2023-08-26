@@ -10,6 +10,9 @@ import org.springframework.http.HttpHeaders;
 
 import reactor.core.publisher.Mono;
 
+/**
+ * 사후 필터
+ */
 @Configuration
 public class ResponseFilter {
  
@@ -23,9 +26,9 @@ public class ResponseFilter {
         return (exchange, chain) -> {
             return chain.filter(exchange).then(Mono.fromRunnable(() -> {
             	  HttpHeaders requestHeaders = exchange.getRequest().getHeaders();
-            	  String correlationId = filterUtils.getCorrelationId(requestHeaders);
+            	  String correlationId = filterUtils.getCorrelationId(requestHeaders); // 원본 HTTP 요청에 상관관계 ID를 가져옴
             	  logger.debug("Adding the correlation id to the outbound headers. {}", correlationId);
-                  exchange.getResponse().getHeaders().add(FilterUtils.CORRELATION_ID, correlationId);
+                  exchange.getResponse().getHeaders().add(FilterUtils.CORRELATION_ID, correlationId); // 응답에 상관관계 ID를 삽입
                   logger.debug("Completing outgoing request for {}.", exchange.getRequest().getURI());
               }));
         };
