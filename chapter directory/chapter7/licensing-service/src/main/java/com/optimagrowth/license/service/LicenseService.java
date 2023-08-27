@@ -125,7 +125,7 @@ public class LicenseService {
 	public List<License> getLicensesByOrganization(String organizationId) throws TimeoutException {
 		logger.debug("getLicensesByOrganization Correlation id: {}",
 				UserContextHolder.getContext().getCorrelationId());
-		//randomlyRunLong();
+		randomlyRunLong();
 		sleep();
 		return licenseRepository.findByOrganizationId(organizationId);
 	}

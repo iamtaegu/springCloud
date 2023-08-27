@@ -42,13 +42,13 @@ management.endpoint.health:
 # 회로 차단기 사용자 정의
 resilience4j.circuitbreaker:
   instances:
-    licenseService:
-      registerHealthIndicator: true
-      ringBufferSizeInClosedState: 5
-      ringBufferSizeInHalfOpenState: 3
-      waitDurationInOpenState: 10s
-      failureRateThreshold: 50
-      recordExceptions:
+    licenseService: # 라이선싱 서비스의 인스턴스 구성(회로 차단기 애너테이션에 전달되는 이름과 동일)
+      registerHealthIndicator: true # 상태 정보 엔드포인트 구성 정보 노출 여부
+      ringBufferSizeInClosedState: 5 # 링 버퍼의 닫힌 상태 크기
+      ringBufferSizeInHalfOpenState: 3 # 반열린 상태 크기
+      waitDurationInOpenState: 10s # 열린 상태의 대기 시간
+      failureRateThreshold: 50 # 실패율 임계치 백분율
+      recordExceptions: # 실패로 기록될 예외
         - org.springframework.web.client.HttpServerErrorException
         - java.io.IOException
         - java.util.concurrent.TimeoutException
@@ -60,6 +60,7 @@ resilience4j.circuitbreaker:
       waitDurationInOpenState: 20s
       failureRateThreshold: 60
 
+# 속도 제한기 패턴 구현
 resilience4j.ratelimiter:
   instances:
     licenseService:
@@ -67,14 +68,15 @@ resilience4j.ratelimiter:
       limitRefreshPeriod: 5000
       timeoutDuration: 1000ms
 
+# 재시도 패턴 구현
 resilience4j.retry:
   instances:
     retryLicenseService:
       maxRetryAttempts: 5
       waitDuration: 10000
-      retry-exceptions:
+      retry-exceptions: # 재시도 대상이 되는 예외 목록
         - java.util.concurrent.TimeoutException
-
+# 벌크헤드 패턴 구현
 resilience4j.bulkhead:
   instances:
     bulkheadLicenseService:

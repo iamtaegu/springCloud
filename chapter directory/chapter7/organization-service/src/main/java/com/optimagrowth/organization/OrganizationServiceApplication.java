@@ -1,3 +1,4 @@
+
 package com.optimagrowth.organization;
 
 import org.springframework.boot.SpringApplication;
