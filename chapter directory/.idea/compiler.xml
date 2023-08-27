@@ -9,9 +9,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="eurekaserver" />
         <module name="gatewayserver" />
-        <module name="licensing-service (1)" />
+        <module name="licensing-service (2)" />
         <module name="organization-service" />
-        <module name="licensing-service" />
         <module name="taco-cloud" />
         <module name="organization-service (1)" />
       </profile>
