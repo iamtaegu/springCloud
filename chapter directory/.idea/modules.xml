@@ -5,9 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/chapter directory.iml" filepath="$PROJECT_DIR$/.idea/chapter directory.iml" />
       <module fileurl="file://$PROJECT_DIR$/chapter6/eurekaserver/eurekaserver.iml" filepath="$PROJECT_DIR$/chapter6/eurekaserver/eurekaserver.iml" />
       <module fileurl="file://$PROJECT_DIR$/chapter8/gatewayserver/gatewayserver.iml" filepath="$PROJECT_DIR$/chapter8/gatewayserver/gatewayserver.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chapter7/licensing-service/licensing-service (2).iml" filepath="$PROJECT_DIR$/chapter7/licensing-service/licensing-service (2).iml" />
-      <module fileurl="file://$PROJECT_DIR$/chapter6/organization-service/organization-service.iml" filepath="$PROJECT_DIR$/chapter6/organization-service/organization-service.iml" />
-      <module fileurl="file://$PROJECT_DIR$/chapter8/organization-service/organization-service (1).iml" filepath="$PROJECT_DIR$/chapter8/organization-service/organization-service (1).iml" />
+      <module fileurl="file://$PROJECT_DIR$/chapter10/licensing-service/licensing-service.iml" filepath="$PROJECT_DIR$/chapter10/licensing-service/licensing-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/chapter10/organization-service/organization-service.iml" filepath="$PROJECT_DIR$/chapter10/organization-service/organization-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/spring-security/taco-cloud/taco-cloud.iml" filepath="$PROJECT_DIR$/spring-security/taco-cloud/taco-cloud.iml" />
     </modules>
   </component>
