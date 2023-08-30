@@ -7,11 +7,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="eurekaserver" />
-        <module name="gatewayserver" />
-        <module name="organization-service" />
-        <module name="licensing-service" />
-        <module name="taco-cloud" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
