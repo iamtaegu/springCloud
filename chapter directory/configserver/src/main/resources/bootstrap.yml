@@ -3,7 +3,7 @@ spring:
     name: config-server
   profiles:
     active:
-    - git
+      - git
   cloud:
     config:
       server:
@@ -11,9 +11,7 @@ spring:
           search-locations: classpath:/config
         git:
           uri: https://github.com/iamtaegu/springCloudConfig.git
-          search-paths: spring-cloud-config/**
-          default-label: main # defautl:master
-    
+
 server:
   port: 8071
   
