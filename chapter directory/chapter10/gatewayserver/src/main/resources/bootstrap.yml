@@ -3,11 +3,10 @@ spring:
      name: gateway-server 
     cloud:
         config: 
-            uri: http://configserver:8071
+            uri: http://54.84.19.74:8071
 
 logging:
   level:
     com.netflix: WARN
     org.springframework.web: WARN
     com.optimagrowth: DEBUG
-            
