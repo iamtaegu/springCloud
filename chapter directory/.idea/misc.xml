@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/chapter10/gatewayserver/pom.xml" />
         <option value="$PROJECT_DIR$/chapter10/licensing-service/pom.xml" />
         <option value="$PROJECT_DIR$/chapter10/organization-service/pom.xml" />
+        <option value="$PROJECT_DIR$/configserver/pom.xml" />
       </list>
     </option>
   </component>

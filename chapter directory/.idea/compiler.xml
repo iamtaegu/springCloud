@@ -10,6 +10,7 @@
         <module name="gatewayserver" />
         <module name="licensing-service" />
         <module name="organization-service" />
+        <module name="configserver" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
