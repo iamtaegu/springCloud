@@ -11,6 +11,10 @@ import com.optimagrowth.organization.events.model.OrganizationChangeModel;
 import com.optimagrowth.organization.utils.ActionEnum;
 import com.optimagrowth.organization.utils.UserContext;
 
+/**
+ * 메시지를 받아 직렬화하고 메시지를 채널에 발행
+ *
+ */
 @Component
 public class SimpleSourceBean {
     private Source source;
@@ -30,6 +34,10 @@ public class SimpleSourceBean {
                 organizationId,
                 UserContext.getCorrelationId());
 
+        /**
+         * 토픽에 대한 모든 통신은 스프링 클라우드 스트림의 채널(자바 인터페이스 클래스)로 함
+         * 여기서는 output() 메서드를 노출하는 Source 인터페이스 사용
+         */
         source.output().send(MessageBuilder.withPayload(change).build());
     }
 }
