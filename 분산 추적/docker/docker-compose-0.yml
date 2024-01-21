@@ -1,0 +1,22 @@
+version: '2.1'
+services:
+  logstash:
+   image: docker.elastic.co/logstash/logstash:7.12.0
+   container_name: logstash
+   command: logstash -f /etc/logstash/conf.d/logstash.conf
+   volumes:
+     - ./config:/etc/logstash/conf.d
+   ports:
+     - "5000:5000"
+   networks:
+     backend:
+       aliases:
+         - "logstash"
+
+
+volumes:
+  esdata1:
+    driver: local
+networks:
+  backend:
+    driver: bridge

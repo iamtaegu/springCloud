@@ -1,0 +1,18 @@
+version: '2.1'
+services:
+  eurekaserver:
+    image: ostock/eurekaserver:0.0.1-SNAPSHOT
+    container_name: eurekaServer
+    ports:
+      - "8070:8070"
+    networks:
+      backend:
+        aliases:
+          - "eurekaserver"
+
+volumes:
+  esdata1:
+    driver: local
+networks:
+  backend:
+    driver: bridge

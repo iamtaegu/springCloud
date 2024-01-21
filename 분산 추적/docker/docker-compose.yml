@@ -21,31 +21,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
-  configserver:
-    image: ostock/configserver:0.0.1-SNAPSHOT
-    container_name: configServer
-    ports:
-       - "8071:8071"
-    environment:
-      ENCRYPT_KEY: "fje83Ki8403Iod87dne7Yjsl3THueh48jfuO9j4U2hf64Lo"
-    networks:
-      backend:
-        aliases:
-          - "configserver"
-  eurekaserver:
-    image: ostock/eurekaserver:0.0.1-SNAPSHOT
-    container_name: eurekaServer
-    ports:
-      - "8070:8070"
-    depends_on:
-      database:
-        condition: service_healthy
-      configserver:
-        condition: service_started  
-    networks:
-      backend:
-        aliases:
-          - "eurekaserver"
   gatewayserver:
     image: ostock/gatewayserver:0.0.1-SNAPSHOT
     container_name: gateway
@@ -61,10 +36,6 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      configserver:
-        condition: service_started
-      eurekaserver:
-        condition: service_started
     networks:
       backend:
         aliases:
@@ -117,8 +88,6 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      configserver:
-        condition: service_started
       kafkaserver:
         condition: service_started
     ports:
@@ -137,8 +106,6 @@ services:
     depends_on:
       database:
         condition: service_healthy
-      configserver:
-        condition: service_started
       kafkaserver:
         condition: service_started
     ports:
@@ -178,18 +145,6 @@ services:
       backend:
         aliases:
           - "kibana"
-  logstash:
-    image: docker.elastic.co/logstash/logstash:7.12.0
-    container_name: logstash
-    command: logstash -f /etc/logstash/conf.d/logstash.conf
-    volumes:
-      - ./config:/etc/logstash/conf.d
-    ports:
-      - "5000:5000"
-    networks:
-      backend:
-        aliases:
-          - "logstash"
   zipkin: 
     image: openzipkin/zipkin 
     container_name: zipkin

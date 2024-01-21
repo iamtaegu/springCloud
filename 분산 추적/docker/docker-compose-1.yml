@@ -1,0 +1,20 @@
+version: '2.1'
+services:
+  configserver:
+    image: ostock/configserver:0.0.1-SNAPSHOT
+    container_name: configServer
+    ports:
+       - "8071:8071"
+    environment:
+      ENCRYPT_KEY: "fje83Ki8403Iod87dne7Yjsl3THueh48jfuO9j4U2hf64Lo"
+    networks:
+      backend:
+        aliases:
+          - "configserver"
+
+volumes:
+  esdata1:
+    driver: local
+networks:
+  backend:
+    driver: bridge

@@ -27,6 +27,5 @@
 ## ELK
 
  * 서비스 기동 시 bootstrap.yml > config.uri를 인식 못하고
- * default localhost:8761 로 요청 
-    1. config port를 바꾸거나
-    1. bootstrap.yml > application.yml 로 변환 하거나 
+    * 파일 분리
+    * docker-compose-0 > 1 > 2 > docker-compoe.yml (default) 순서
