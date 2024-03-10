@@ -1,72 +1,46 @@
-update
-## Spring Microservices in Action - Second Edition. Chapter 10
+#### mvn clean package dockerfile:build && docker-compose -f docker/docker-compose.yml up 
 
-# Introduction
-Welcome to Spring Microservices in Action, Chapter 10.  Chapter 10 demonstrates how to use Spring Cloud Stream messaging to asynchronously communicate messages between Spring Boot services. For this chapter, we will use Kafka as our message bus to transport messages between our services.
+## 10.3.2 조직 서비스에서 메시지 생산자 작성
 
-1. A Spring Cloud based OAuth2 authentication service that can issue and validate JWT tokens.  
-2. A Spring Cloud Config server that is deployed as Docker container and can manage a services configuration information using a file system or GitHub-based repository.
-3. A Eureka server running as a Spring-Cloud based service. This service will allow multiple service instances to register with it. Clients that need to call a service will use Eureka to lookup the physical location of the target service.
-4. A API Gateway. All of our microservices can be routed through the gateway and have pre, response and post policies enforced on the calls.
-5. A organization service that will manage organization data used within Ostock.
-6. A licensing service that will manage licensing data used within Ostock.
-7. A Postgres SQL database used to hold the data.
-8. A Kafka message bus to transport messages between services.
-9. A Redis service to act as a distributed cache.
+    * 의도 
+        - 조직 데이터가 추가, 수정, 삭제될 때마다 조직 서비스가 카프카 토픽에 메시지를 발행하여 조직 변경 이벤트 알림
 
-## Initial Configuration
-1.	Apache Maven (http://maven.apache.org)  All of the code examples in this book have been compiled with Java version 11.
-2.	Git Client (http://git-scm.com)
-3.  Docker(https://www.docker.com/products/docker-desktop)
+    * 참고     
+        - 모든 통신은 스프링 클라우드 스트림의 채널(channel)이라는 자바 인터페이스 클래스로 함 
+            * output() 메서드를 노출하는 Source 인터페이스를 사용
+            * source.output()
+        - 메시지 브로커뿐만 아니라 특정 메시지 큐에 조직 서비스를 바인딩하는 방법은 구성 설정으로 수행
+        - 아파치 주키퍼는 구성 정보 및 이름 데이터를 유지 관리하는 데 사용되고, 분산 시스템에서 유연한 동기화를 제공
 
+    * 처리 
+        1. 의존성 추가 
+            - 스프링 클라우드 스트림
+            - 스프링 클라우드 카프카
+        2. 스프링 클라우드 스트림의 메시지 브러커와 바인딩하도록(메시지를 발행하고 소비) 지정 
+            - 부트스트랩 클래스에 @EnableBinding(Source.class) 애너테이션 추가 
+        3. UserContext 변수를 ThreadLocal로 만들기
+            - 멤버변수를 ThreadLocal로 저장하면 현재 스레드에 대한 데이터를 스레드별로 저장할 수 있음 
+            - 여기에 설정된 정보는 그 값을 설정한 스레드만 읽을 수 있음
+        4. 메시지 발행 로직 작성
+            - SimpleSourceBean
+        5. 메시지 발생
+            - OrganizationService
 
-## How To Use
+    * 검토
+        - 어떤 데이터를 메시지에 넣어야 할까 ?
+            * 정확하게 얼마나 많은 데이터를 메시지에 넣어야 하는가? 
+            * 예제에서는
+                - 변경된 조직 레코드의 조직 ID만 전달
+                - 메시지에 변경된 데이터의 복사본을 넣지 않고
+                - 시스템 이벤트에 기반을 둔 메시지를 사용하여 데이터 상태가 변경되었음을 알리고
+                - 항상 다른 서비스가 데이터의 새 복사본을 조회하기 위해 원본에서 가져오게 함
+                - 실행 시간 면에서 비용이 더 들지만, 항상 최신 데이터 복사본을 보장할 수 있음
 
-To clone and run this application, you'll need [Git](https://git-scm.com), [Maven](https://maven.apache.org/), [Java 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html). From your command line:
-> JAVA 버전 확인
-> ```bash
-> $ mvn --version
-> ```
-> 실행 결과의 JAVA 버전이 11임을 확인한 후 아래 명령을 실행한다.
-```bash
-# Clone this repository
-$ git clone https://github.com/klimtever/manning-smia2
+## 10.3.3 라이선싱 서비스에서 메시지 소비자 작성
 
-# Go into the repository, by changing to the directory where you have downloaded the 
-# chapter 10 source code and select whether you want the initial or final configuration
-$ cd chapter10
-
-# To build the code examples for Chapter 10 as a docker image, open a command-line 
-# window and execute the following command:
-$ mvn clean package dockerfile:build
-
-# Now we are going to use docker-compose to start the actual image.  To start the docker image, stay in the directory containing  your chapter 10 source code and  Run the following command: 
-$ docker-compose -f docker/docker-compose.yml up
-```
-
-> 맥북 M1 계열 사용자 중 spotify docker plugin으로 빌드가 되지 않는다면 아래 명령을 사용하기 바란다.
-> ```bash
-> $ ./build-for-m1.sh
-> ```
-
-# The build command
-
-Will execute the [Spotify dockerfile plugin](https://github.com/spotify/dockerfile-maven) defined in the pom.xml file.  
-
- Running the above command at the root of the project directory will build all of the projects.  If everything builds successfully you should see a message indicating that the build was successful.
-
-# The Run command
-
-This command will run our services using the docker-compose.yml file located in the /docker directory. 
-
-If everything starts correctly you should see a bunch of Spring Boot information fly by on standard out.  At this point all of the services needed for the chapter code examples will be running.
-
-# Database
-You can find the database script as well in the docker directory.
-
-## Contact
-
-I'd like you to send me an email on <illaryhs@gmail.com> about anything you'd want to say about this software.
-
-### Contributing
-Feel free to file an issue if it doesn't work for your code sample. Thanks.
+    * 처리 
+        1. 의존성 추가 
+            - 스프링 클라우드 스트림
+            - 스프링 클라우드 카프카
+        2. 스프링 클라우드 스트림의 메시지 브러커와 바인딩하도록(메시지를 발행하고 소비) 지정 
+            - 부트스트랩 클래스에 @EnableBinding(Sink.class) 애너테이션 추가 

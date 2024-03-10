@@ -28,7 +28,8 @@ public class SimpleSourceBean {
 
     public void publishOrganizationChange(ActionEnum action, String organizationId){
        logger.debug("Sending Kafka message {} for Organization Id: {}", action, organizationId);
-        OrganizationChangeModel change =  new OrganizationChangeModel(
+       // 자바 POJO 메시지를 발행
+       OrganizationChangeModel change =  new OrganizationChangeModel(
                 OrganizationChangeModel.class.getTypeName(),
                 action.toString(),
                 organizationId,
