@@ -43,6 +43,7 @@ public class LicenseServiceApplication {
 		SpringApplication.run(LicenseServiceApplication.class, args);
 	}
 	
+	// 레디스 서버에 대한 데이터베이스 커넥션을 설정
 	@Bean
 	JedisConnectionFactory jedisConnectionFactory() {
 		String hostname = serviceConfig.getRedisServer();
@@ -52,6 +53,7 @@ public class LicenseServiceApplication {
 	    return new JedisConnectionFactory(redisStandaloneConfiguration);
 	}
 
+	// 레디스 서버에 액션을 실행할 RedisTemplate을 생성
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
 		RedisTemplate<String, Object> template = new RedisTemplate<>();
