@@ -22,7 +22,7 @@ services:
       timeout: 5s
       retries: 5
   configserver:
-    image: ostock/configserver:0.0.1-SNAPSHOT
+    image: ostock/configserver:chapter12
     container_name: configServer
     ports:
        - "8071:8071"
@@ -33,7 +33,7 @@ services:
         aliases:
           - "configserver"
   eurekaserver:
-    image: ostock/eurekaserver:0.0.1-SNAPSHOT
+    image: ostock/eurekaserver:chapter12
     container_name: eurekaServer
     ports:
       - "8070:8070"
@@ -47,7 +47,7 @@ services:
         aliases:
           - "eurekaserver"
   gatewayserver:
-    image: ostock/gatewayserver:0.0.1-SNAPSHOT
+    image: ostock/gatewayserver:chapter12
     container_name: gateway
     ports:
       - "8072:8072"
@@ -105,8 +105,27 @@ services:
       backend:
         aliases:
           - "redis"
+  authenticationservice:
+    image: ostock/authentication-service:chapter12
+    container_name: authentication-service
+    environment:
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://configserver:8071"
+      CONFIGSERVER_PORT:   "8071"
+      ENCRYPT_KEY:       "IMSYMMETRIC"
+    depends_on:
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
+    ports:
+      - "8082:8082"
+    networks:
+      backend:
+        aliases:
+          - "authenticationservice"
   licensingservice:
-    image: ostock/licensing-service:0.0.3-SNAPSHOT
+    image: ostock/licensing-service:chapter12
     container_name: licensing-service
     environment:
       PROFILE: "dev"
@@ -119,6 +138,8 @@ services:
         condition: service_healthy
       configserver:
         condition: service_started
+      authenticationservice:
+        condition: service_started
       kafkaserver:
         condition: service_started
     ports:
@@ -126,7 +147,7 @@ services:
     networks:
       - backend
   organizationservice:
-    image: ostock/organization-service:0.0.1-SNAPSHOT
+    image: ostock/organization-service:chapter12
     container_name: organization-service
     environment:
       PROFILE: "dev"
@@ -146,7 +167,7 @@ services:
     networks:
       - backend
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
     container_name: elasticsearch
     environment:
       - node.name=elasticsearch
@@ -191,7 +212,7 @@ services:
         aliases:
           - "logstash"
   zipkin: 
-    image: openzipkin/zipkin 
+    image: openzipkin/zipkin:2.23 
     container_name: zipkin
     depends_on: 
       - elasticsearch

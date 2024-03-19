@@ -2,7 +2,6 @@ version: '2.1'
 services:
   database:
     image: postgres:latest
-    container_name: postgres
     ports:
       - "5432:5432"
     environment:
@@ -23,7 +22,6 @@ services:
       retries: 5
   configserver:
     image: ostock/configserver:0.0.1-SNAPSHOT
-    container_name: configServer
     ports:
        - "8071:8071"
     environment:
@@ -34,7 +32,6 @@ services:
           - "configserver"
   eurekaserver:
     image: ostock/eurekaserver:0.0.1-SNAPSHOT
-    container_name: eurekaServer
     ports:
       - "8070:8070"
     depends_on:
@@ -48,7 +45,6 @@ services:
           - "eurekaserver"
   gatewayserver:
     image: ostock/gatewayserver:0.0.1-SNAPSHOT
-    container_name: gateway
     ports:
       - "8072:8072"
     environment:
@@ -69,45 +65,26 @@ services:
       backend:
         aliases:
           - "gateway"
-  zookeeper:
-    image: zookeeper:3.7.0
-    container_name: zookeeper
-    ports:
-      - 2181:2181
-    networks:
-      backend:
-        aliases:
-          - "zookeeper"
-  kafkaserver:
-    image: wurstmeister/kafka:latest
-    container_name: kafka
-    ports:
-      - 9092:9092
+  authenticationservice:
+    image: ostock/authentication-service:0.0.1-SNAPSHOT
     environment:
-      - KAFKA_ADVERTISED_HOST_NAME=kafka
-      - KAFKA_ADVERTISED_PORT=9092
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_CREATE_TOPICS=dresses:1:1,ratings:1:1
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      PROFILE: "dev"
+      CONFIGSERVER_URI: "http://configserver:8071"
+      CONFIGSERVER_PORT:   "8071"
+      ENCRYPT_KEY:       "IMSYMMETRIC"
     depends_on:
-      - zookeeper
-    networks:
-      backend:
-        aliases:
-          - "kafka"
-  redisserver:
-    image: redis:alpine
-    container_name: redis
+      database:
+        condition: service_healthy
+      configserver:
+        condition: service_started
     ports:
-      - 6379:6379
+      - "8082:8082"
     networks:
       backend:
         aliases:
-          - "redis"
+          - "authenticationservice"
   licensingservice:
     image: ostock/licensing-service:0.0.3-SNAPSHOT
-    container_name: licensing-service
     environment:
       PROFILE: "dev"
       CONFIGSERVER_URI: "http://configserver:8071"
@@ -119,7 +96,7 @@ services:
         condition: service_healthy
       configserver:
         condition: service_started
-      kafkaserver:
+      authenticationservice:
         condition: service_started
     ports:
       - "8080:8080"
@@ -127,7 +104,6 @@ services:
       - backend
   organizationservice:
     image: ostock/organization-service:0.0.1-SNAPSHOT
-    container_name: organization-service
     environment:
       PROFILE: "dev"
       CONFIGSERVER_URI: "http://configserver:8071"
@@ -139,75 +115,34 @@ services:
         condition: service_healthy
       configserver:
         condition: service_started
-      kafkaserver:
-        condition: service_started
     ports:
       - "8081:8081"
     networks:
       - backend
-  elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.1
-    container_name: elasticsearch
-    environment:
-      - node.name=elasticsearch
-      - discovery.type=single-node
-      - cluster.name=docker-cluster
-      - bootstrap.memory_lock=true
-      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
-    ulimits:
-      memlock:
-        soft: -1
-        hard: -1
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090" 
     volumes:
-      - esdata1:/usr/share/elasticsearch/data
-    ports:
-      - 9300:9300
-      - 9200:9200
+    - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    container_name: prometheus
     networks:
       backend:
         aliases:
-          - "elasticsearch"
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.13.0
-    container_name: kibana
+          - "prometheus"
+  grafana:
+    image: "grafana/grafana:latest"
+    ports:
+      - "3000:3000"
     environment:
-      ELASTICSEARCH_URL: "http://elasticsearch:9300"
-    ports:
-      - 5601:5601
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=password
+    container_name: grafana 
     networks:
       backend:
         aliases:
-          - "kibana"
-  logstash:
-    image: docker.elastic.co/logstash/logstash:7.12.0
-    container_name: logstash
-    command: logstash -f /etc/logstash/conf.d/logstash.conf
-    volumes:
-      - ./config:/etc/logstash/conf.d
-    ports:
-      - "5000:5000"
-    networks:
-      backend:
-        aliases:
-          - "logstash"
-  zipkin: 
-    image: openzipkin/zipkin 
-    container_name: zipkin
-    depends_on: 
-      - elasticsearch
-    environment: 
-      - STORAGE_TYPE=elasticsearch
-      - "ES_HOSTS=elasticsearch:9300"
-    ports:
-      - "9411:9411"
-    networks:
-      backend:
-        aliases:
-          - "zipkin"
+          - "grafana"
 
-volumes:
-  esdata1:
-    driver: local
 networks:
   backend:
     driver: bridge
