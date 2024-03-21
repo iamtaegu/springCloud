@@ -10,8 +10,8 @@ services:
       POSTGRES_PASSWORD: "postgres"
       POSTGRES_DB:       "ostock_dev"
     volumes:
-        - ./init.sql:/docker-entrypoint-initdb.d/1-init.sql
-        - ./data.sql:/docker-entrypoint-initdb.d/2-data.sql
+      - ./init.sql:/docker-entrypoint-initdb.d/1-init.sql
+      - ./data.sql:/docker-entrypoint-initdb.d/2-data.sql
     networks:
       backend:
         aliases:
@@ -25,7 +25,7 @@ services:
     image: ostock/configserver:0.0.1-SNAPSHOT
     container_name: configServer
     ports:
-       - "8071:8071"
+      - "8071:8071"
     environment:
       ENCRYPT_KEY: "fje83Ki8403Iod87dne7Yjsl3THueh48jfuO9j4U2hf64Lo"
     networks:
@@ -41,7 +41,7 @@ services:
       database:
         condition: service_healthy
       configserver:
-        condition: service_started  
+        condition: service_started
     networks:
       backend:
         aliases:
@@ -69,6 +69,7 @@ services:
       backend:
         aliases:
           - "gateway"
+    restart: on-failure
   zookeeper:
     image: zookeeper:3.7.0
     container_name: zookeeper
@@ -125,6 +126,7 @@ services:
       - "8080:8080"
     networks:
       - backend
+    restart: on-failure
   organizationservice:
     image: ostock/organization-service:0.0.1-SNAPSHOT
     container_name: organization-service
@@ -145,8 +147,9 @@ services:
       - "8081:8081"
     networks:
       - backend
+    restart: on-failure
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.11.0
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.0
     container_name: elasticsearch
     environment:
       - node.name=elasticsearch
@@ -179,7 +182,7 @@ services:
         aliases:
           - "kibana"
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.12.0
+    image: docker.elastic.co/logstash/logstash:7.13.0
     container_name: logstash
     command: logstash -f /etc/logstash/conf.d/logstash.conf
     volumes:
@@ -190,12 +193,12 @@ services:
       backend:
         aliases:
           - "logstash"
-  zipkin: 
-    image: openzipkin/zipkin:2.23
+  zipkin:
+    image: openzipkin/zipkin
     container_name: zipkin
-    depends_on: 
+    depends_on:
       - elasticsearch
-    environment: 
+    environment:
       - STORAGE_TYPE=elasticsearch
       - "ES_HOSTS=elasticsearch:9300"
     ports:
