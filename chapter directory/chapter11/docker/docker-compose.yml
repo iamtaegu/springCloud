@@ -65,6 +65,8 @@ services:
         condition: service_started
       eurekaserver:
         condition: service_started
+      logstash:
+        condition: service_started
     networks:
       backend:
         aliases:
@@ -122,6 +124,8 @@ services:
         condition: service_started
       kafkaserver:
         condition: service_started
+      logstash:
+        condition: service_started
     ports:
       - "8080:8080"
     networks:
@@ -142,6 +146,8 @@ services:
       configserver:
         condition: service_started
       kafkaserver:
+        condition: service_started
+      logstash:
         condition: service_started
     ports:
       - "8081:8081"
@@ -196,8 +202,11 @@ services:
   zipkin:
     image: openzipkin/zipkin
     container_name: zipkin
+#    depends_on:
+#      - elasticsearch
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_started
     environment:
       - STORAGE_TYPE=elasticsearch
       - "ES_HOSTS=elasticsearch:9300"
