@@ -49,7 +49,8 @@ services:
     image: openzipkin/zipkin
     container_name: zipkin
     depends_on:
-      - elasticsearch
+      elasticsearch:
+        condition: service_started
     environment:
       - STORAGE_TYPE=elasticsearch
       - "ES_HOSTS=elasticsearch:9300"
