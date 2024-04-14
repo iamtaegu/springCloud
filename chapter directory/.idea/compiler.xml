@@ -8,8 +8,8 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="gatewayserver" />
-        <module name="licensing-service" />
         <module name="organization-service" />
+        <module name="licensing-service" />
         <module name="configserver" />
       </profile>
     </annotationProcessing>
