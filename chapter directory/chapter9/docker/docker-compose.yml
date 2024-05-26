@@ -105,6 +105,7 @@ services:
     restart: always
     environment:
       KEYCLOAK_VERSION: 6.0.1
+      # 관리자 콘솔 계정 설정
       KEYCLOAK_USER: admin
       KEYCLOAK_PASSWORD: admin
     volumes:
