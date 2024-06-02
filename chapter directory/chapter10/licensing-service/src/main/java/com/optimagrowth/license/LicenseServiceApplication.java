@@ -42,8 +42,11 @@ public class LicenseServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LicenseServiceApplication.class, args);
 	}
-	
-	// 레디스 서버에 대한 데이터베이스 커넥션을 설정
+
+	/**
+	 * 스프링은 레디스 서버와 통신하기 위해 제디스(Jedis) 오픈 소스 프로젝트를 사용
+	 * 레디스 서버에 대한 데이터베이스 커넥션을 설정
+	 */
 	@Bean
 	JedisConnectionFactory jedisConnectionFactory() {
 		String hostname = serviceConfig.getRedisServer();
@@ -53,7 +56,10 @@ public class LicenseServiceApplication {
 	    return new JedisConnectionFactory(redisStandaloneConfiguration);
 	}
 
-	// 레디스 서버에 액션을 실행할 RedisTemplate을 생성
+	/**
+	 *
+	 * 레디스 서버에 액션을 실행할 RedisTemplate을 생성
+	 */
 	@Bean
 	public RedisTemplate<String, Object> redisTemplate() {
 		RedisTemplate<String, Object> template = new RedisTemplate<>();
