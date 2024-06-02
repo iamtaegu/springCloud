@@ -16,13 +16,14 @@ import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 
-@Configuration
+@Configuration // 1) @Configuration 설정
 @EnableWebSecurity // 2) 전역 WebSecurity 구성 적용
 @EnableGlobalMethodSecurity(jsr250Enabled = true) // 3) @RoleAllowed 활성화
 public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter { // 4) KeycloakWebSecurityConfigurerAdapter 확장
 
     @Override
     // 5) keyclock 인증 제공자(authentication provider) 등록
+    //  ㅇ 모든 접근 규칙은 configure() 에서 정의
     //  ㅇ HttpSecurity 객체로 모든 접근 규칙을 구성하고 설정
     //  ㅇ 조직서비스의 모든 URL을 인가된 사용자만 접근 허용
     protected void configure(HttpSecurity http) throws Exception {
