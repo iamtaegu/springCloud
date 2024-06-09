@@ -26,13 +26,11 @@
  
 ## ELK
 
- * 서비스 기동 시 bootstrap.yml > config.uri를 인식 못하고
-    * 파일 분리
-    * docker-compose-0 > 1 > 2 > docker-compoe.yml (default) 순서
-
 ## chapter9
 
- * 키클록은 다양한 데이터베이스와 함께 사용할 수 있고, 예제는 임베디드 H2 데이터베이스를 사용 
+ * 키클록은 
+    - 사용자 인증 및 접근 제어를 관리하기 위한 오픈 소스 싱글 사인온 
+    - 아이덴티티 액세스 관리 솔루션
  * 작업 내용
    1. 키클록 서비스에서 사용할 spmia-realm 생성
    2. 클라이언트 애플리케이션 등록
@@ -108,3 +106,7 @@
       * OrganizationRedisRepository
    4. 레디스와 서비스가 레디스 데이터를 저장하고 읽어 오게 작성
       * OrganizationRestTemplateClietn
+
+## 생각해보기
+ * 2024.06.09
+   - 사용자에게 액세스 토큰을 어떻게 부여해줄 것인가??
